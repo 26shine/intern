@@ -29,11 +29,11 @@ services:
       SESSION_DRIVER: array
       QUEUE_DRIVER: array
       
-      VIRTUAL_HOST: api.yoga-institute.local
+      VIRTUAL_HOST: http://api.intern.gkcsoftware.com/
       VIRTUAL_NETWORK: nginx-proxy
       VIRTUAL_PORT: 80
       
-      LETSENCRYPT_HOST: api.yoga-institute.local
+      LETSENCRYPT_HOST: http://api.intern.gkcsoftware.com/
       LETSENCRYPT_EMAIL: admin@yoga_institute.com
       
       MAIL_DRIVER: smtp
@@ -58,5 +58,5 @@ services:
 networks:
   default:
     external:
-      name: local_network
+      name: 172.17.0.1
 
