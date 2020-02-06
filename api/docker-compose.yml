@@ -1,0 +1,62 @@
+version: '2'
+
+services:
+  api:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: yoga_institute_api
+    container_name: yoga_institute_api
+    expose:
+      - 80
+    environment:
+      APP_ENV: local
+      APP_DEBUG: 'true'
+      APP_KEY: P4NSUNCyv8Oi7YnKwAENTOZYVI2XEBb9
+      APP_TIMEZONE: UTC
+      APP_LOCALE: en
+      APP_FALLBACK_LOCALE: en
+      
+      DB_CONNECTION: mysql
+      DB_HOST: yoga_institute_db
+      DB_PORT: 3306
+      DB_DATABASE: yoga_institute_db
+      DB_USERNAME: yoga_institute_dbu
+      DB_PASSWORD: 123456
+      
+#      MEMCACHED_HOST: cache
+      CACHE_DRIVER: array
+      SESSION_DRIVER: array
+      QUEUE_DRIVER: array
+      
+      VIRTUAL_HOST: api.yoga-institute.local
+      VIRTUAL_NETWORK: nginx-proxy
+      VIRTUAL_PORT: 80
+      
+      LETSENCRYPT_HOST: api.yoga-institute.local
+      LETSENCRYPT_EMAIL: admin@yoga_institute.com
+      
+      MAIL_DRIVER: smtp
+      MAIL_HOST: email-smtp.us-west-2.amazonaws.com
+      MAIL_PORT: 25
+      MAIL_USERNAME: AKIAVZCW7BGKOQCZQWEO
+      MAIL_PASSWORD: BG0isa5JbYPrP5h7SuoeFgmC7J67sv2JzIyJH+lN674Z
+      MAIL_ENCRYPTION: tls
+      MAIL_FROM: no-reply@giakiemcoder.com
+      MAIL_TO: minhtri911119@gmail.com
+      
+      URL_MAIN: http://localhost:3000
+      URL_ADMIN: http://localhost:3001
+      FE_URL: http://localhost:3000
+      GOOGLE_RECAPTCHA_SECRET: 6LfkxsAUAAAAACUQ4fa99NMKUZb44aNgP82isS4u
+    volumes:
+      - "./conf.d/:/etc/nginx/conf.d/"
+      - "./source:/app"
+    external_links:
+      - yoga_institute_db:yoga_institute_db
+   
+networks:
+  default:
+    external:
+      name: local_network
+

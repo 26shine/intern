@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  db:
+    image: yoga_institute_db
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile-db
+    container_name: yoga_institute_db
+    environment:
+      MYSQL_DATABASE: yoga_institute_db
+      MYSQL_USER: yoga_institute_dbu
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - ./db_data:/var/lib/mysql
+    external_links:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: yoga_institute_phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: db
+      PMA_PORT: 3306
+      VIRTUAL_HOST: http://phpmyadmin.intern.gkcsoftware.com/
+      VIRTUAL_NETWORK: nginx-proxy
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: http://phpmyadmin.intern.gkcsoftware.com/
+      LETSENCRYPT_EMAIL: admin@yoga_institute.com
+#    ports:
+#      - "3618:80"
+    links:
+      - db
+    depends_on:
+      - db
+    
+volumes:
+  db_data: {}
+
+networks:
+  default:
+    external:
+      name: local_network
